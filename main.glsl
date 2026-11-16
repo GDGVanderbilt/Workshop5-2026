@@ -25,6 +25,25 @@ vec3 palette(float t) {
     return .5+.5*cos(6.28318*(t+vec3(.3,.416,.557)));
 }
 
+vec3 normal(vec3 p) {
+    float e = 0.001;
+    float dx = map(p + vec3(e, 0.0, 0.0)) - map(p - vec3(e, 0.0, 0.0));
+    float dy = map(p + vec3(0.0, e, 0.0)) - map(p - vec3(0.0, e, 0.0));
+    float dz = map(p + vec3(0.0, 0.0, e)) - map(p - vec3(0.0, 0.0, e));
+    
+    return normalize(vec3(dx, dy, dz));
+}
+
+
+
+
+
+
+
+
+
+
+
 float map(vec3 p) {
 
     vec2 mouse = iMouse.xy / iResolution.xy;
@@ -39,16 +58,6 @@ float map(vec3 p) {
     p.z =  mod(p.z, .25) - .125;
     return sdOctahedron(p, 0.15);
 }
-
-vec3 normal(vec3 p) {
-    float e = 0.001;
-    float dx = map(p + vec3(e, 0.0, 0.0)) - map(p - vec3(e, 0.0, 0.0));
-    float dy = map(p + vec3(0.0, e, 0.0)) - map(p - vec3(0.0, e, 0.0));
-    float dz = map(p + vec3(0.0, 0.0, e)) - map(p - vec3(0.0, 0.0, e));
-    
-    return normalize(vec3(dx, dy, dz));
-}
-
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
